@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">GreenAvatar</string>
+    <string name="Touch">Touch Me</string>
+    <string name="title_activity_display_message">MyMessage</string>
+
 </resources>

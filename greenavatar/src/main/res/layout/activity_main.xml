@@ -11,7 +11,11 @@
     tools:context="com.innopolis.greenavatar.MainActivity">
 
     <TextView
-        android:text="Hello World!"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/consumption"
+        android:layout_width="fill_parent"
+        android:layout_height="90dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="30dp"
+        android:text="Consumption" />
+
 </RelativeLayout>
