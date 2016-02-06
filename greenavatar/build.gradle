@@ -9,6 +9,10 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+    }
+    repositories {
+        maven { url "https://jitpack.io" }
     }
     buildTypes {
         release {
@@ -21,9 +25,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.2.0'
 }

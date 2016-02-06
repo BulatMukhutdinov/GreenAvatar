@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_ipaddress"
+            android:layout_width="308dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/input_layout_password"
+            android:layout_alignLeft="@+id/input_layout_password"
+            android:layout_alignStart="@+id/input_layout_password"
+            android:layout_marginBottom="69dp">
+
+            <EditText
+                android:id="@+id/input_ipaddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_ipaddress" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_password"
+            android:layout_width="306dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+
+            <EditText
+                android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_password" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/saveSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/input_layout_password"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="80dp"
+            android:text="@string/savetext" />
+    </RelativeLayout>
+</LinearLayout>
