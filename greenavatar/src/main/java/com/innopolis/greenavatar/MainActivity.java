@@ -49,13 +49,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (cursor.moveToFirst()) {
             fragment = new Face();
             currFragment = fragment;
-            ft.replace(R.id.content_frame, fragment, "Face").addToBackStack("Face");
+            ft.replace(R.id.content_frame, fragment, "Face");
         } else {
             fragment = new LogOffFragment();
             currFragment = fragment;
-            ft.replace(R.id.content_frame, fragment, "Log In").addToBackStack("Log In");
+            ft.replace(R.id.content_frame, fragment, "Log In");
         }
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.setTransition(FragmentTransaction.TRANSIT_NONE);
         ft.commit();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);

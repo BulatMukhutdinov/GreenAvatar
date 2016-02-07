@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,9 +71,10 @@ public class Settings extends Fragment {
                     } else {
                         database.insert(DBHelper.TABLE2, null, data);
                         updateData();
+                        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.content_frame, new Face(), "Face");
-                        ft.commit();
+                        ft.remove(getActivity().getSupportFragmentManager().findFragmentByTag("Log In"));
+                        ft.replace(R.id.content_frame, new Face(), "Face").addToBackStack(null).commit();
                     }
                 } else {
                     Toast.makeText(context, "Wrong address. Try again", Toast.LENGTH_LONG).show();
