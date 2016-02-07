@@ -1,13 +1,1 @@
-.gradle/
-.idea/
-build/
-gradle/
-/greenavatar/build/
-/greenavatar/proguard-rules.pro
-/greenavatar/*.iml
-/greenavatar/.gitignore
-local.properties
-gradle.properties
-gradlew
-gradlew.bat
-*.iml
+
