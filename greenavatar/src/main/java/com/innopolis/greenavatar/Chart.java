@@ -53,7 +53,7 @@ public class Chart extends Fragment {
         dbHelper = new DBHelper(context);
 
         try {
-            dataSetMap = new ChartTask().execute("192.168.0.105").get();
+            dataSetMap = new ChartTask().execute("188.127.231.146").get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
