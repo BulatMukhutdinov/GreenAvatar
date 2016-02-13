@@ -51,9 +51,12 @@ public class Chart extends Fragment {
         View view = inflater.inflate(R.layout.chartlayout, container, false);
         chart = (LineChart) view.findViewById(R.id.chart);
         dbHelper = new DBHelper(context);
-
+        database = dbHelper.getReadableDatabase();
+        Cursor cursor = database.query(DBHelper.TABLE2, null, null, null, null, null, null);
+        cursor.moveToFirst();
+        String address = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_IP));
         try {
-            dataSetMap = new ChartTask().execute("188.127.231.146").get();
+            dataSetMap = new ChartTask().execute(address).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -104,6 +107,9 @@ public class Chart extends Fragment {
                 ipAddress = InetAddress.getByName(params[0]);
                 socket.connect(new InetSocketAddress(ipAddress, 6666));
                 ObjectOutputStream outStream = new ObjectOutputStream(socket.getOutputStream());
+                outStream.flush();
+                outStream.writeUTF("graph");
+                outStream.flush();
                 ObjectInputStream inStream = new ObjectInputStream(socket.getInputStream());
                 Map<String, String> yourMap = (Map<String, String>) inStream.readObject();
                 socket.close();

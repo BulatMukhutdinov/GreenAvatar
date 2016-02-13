@@ -109,8 +109,7 @@ public class Settings extends Fragment {
             Socket socket = new Socket();
             try {
                 ipAddress = InetAddress.getByName(params[0]);
-                socket.setSoTimeout(200);
-                socket.connect(new InetSocketAddress(ipAddress, 6666), 200);
+                socket.connect(new InetSocketAddress(ipAddress, 6666), 1000);
                 if (socket.isConnected()){
                     socket.close();
                     return true;

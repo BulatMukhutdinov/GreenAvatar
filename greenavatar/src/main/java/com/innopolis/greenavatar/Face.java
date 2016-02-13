@@ -15,10 +15,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -29,6 +29,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -142,17 +143,18 @@ public class Face extends Fragment{
         cursor.moveToFirst();
         String address = cursor.getString(cursor.getColumnIndex(DBHelper.COLUMN_IP));
         InetAddress ipAddress;
-        DataInputStream in = null;
-        DataOutputStream out = null;
+        ObjectInputStream in = null;
+        ObjectOutputStream out = null;
         try {
             ipAddress = InetAddress.getByName(address);
             socket = new Socket();
-            socket.setSoTimeout(200);
-            socket.connect(new InetSocketAddress(ipAddress, serverPort), 200);
-            InputStream sin = socket.getInputStream();
-            OutputStream sout = socket.getOutputStream();
-            in = new DataInputStream(sin);
-            out = new DataOutputStream(sout);
+            socket.connect(new InetSocketAddress(ipAddress, serverPort));
+            out = new ObjectOutputStream(socket.getOutputStream());
+            out.flush();
+            out.writeUTF("consumption");
+            out.flush();
+            InputStream inputStream = socket.getInputStream();
+            in = new ObjectInputStream(inputStream);
         } catch (SocketTimeoutException e) {
             e.printStackTrace();
             Toast.makeText(context,"Unable to establish connection",Toast.LENGTH_LONG).show();
@@ -172,10 +174,11 @@ public class Face extends Fragment{
 
         final Date[] date = new Date[1]; //this is for the db date field
 
-        final DataOutputStream finalOut = out;
-        final DataInputStream finalIn = in;
         timer = new Timer();
         try {
+            final ObjectOutputStream finalOut = out;
+            out.flush();
+            final ObjectInputStream finalIn = in;
             timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
@@ -187,16 +190,11 @@ public class Face extends Fragment{
                                                             date[0] = new Date();
                                                             String dateTime = s.format(date[0]);
 
-                                                            finalOut.writeUTF("");
+                                                            finalOut.writeUTF("consumption");
                                                             finalOut.flush();
                                                             Double cons = finalIn.readDouble();
 
                                                             textView.setText("Consumption percentage is " + formatter.format(cons) + "% from regular");
-
-                                                            ContentValues cv = new ContentValues();
-                                                            cv.put(DBHelper.COLUMN_DATETIME, dateTime);
-                                                            cv.put(DBHelper.COLUMN_CONSPERC, cons);
-                                                            database.insert(DBHelper.TABLE1, null, cv);
 
                                                             animateFace(cons, bulb);
                                                         } catch (IOException e) {
@@ -208,6 +206,8 @@ public class Face extends Fragment{
                 }
             }, 0, 5000);
         } catch (IllegalStateException e) {
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
